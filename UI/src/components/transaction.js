@@ -1,5 +1,5 @@
-import { formatCurrency } from "../utils/helpers.js";
-import { dataService } from "../services/dataService.js";
+import { formatCurrency } from "../src/utils/helpers.js";
+import { dataService } from "../src/services/dataService.js";
 
 /**
  * Creates a transaction HTML element

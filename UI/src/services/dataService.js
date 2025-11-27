@@ -1,4 +1,4 @@
-import { fetchAllTransactions, insertTransaction } from "./dataApiService.js";
+import { deleteTransaction, fetchAllTransactions, insertTransaction } from "./dataApiService.js";
 import { insert as insertIntoLocalStorage } from "./localStorageService.js";
 import { readAll as readAllFromLocalStorage } from "./localStorageService.js";
 import { removeTransaction as removeFromLocalStorage } from "./localStorageService.js";
@@ -23,7 +23,7 @@ const dataApiServiceAdapter = {
             return fetchAllTransactions();
       },
       remove(id) {
-            throw new Error("Not implemented");
+            return deleteTransaction(id);
       }
 };
 

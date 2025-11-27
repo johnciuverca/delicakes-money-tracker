@@ -22,4 +22,12 @@ router.post('/', (req, res) => {
       res.status(201).json(newTransaction);
 });
 
+// DELETE a transaction by ID
+router.delete('/', (req, res) => {
+      const id = req.body.id;
+      const elementIndex = transactions.findIndex(x => x.id === id);
+      transactions.splice(elementIndex, 1);
+      res.status(200);
+});
+
 export default router;

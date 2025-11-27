@@ -23,4 +23,19 @@ export function insertTransaction(transactionInput) {
       });
 }
 
-
+export function deleteTransaction(inputId) {
+      return fetch('http://localhost:3000/api/transactions', {
+            method: 'DELETE',
+            headers: {
+                  'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                  id: inputId
+            })
+      }).then(response => {
+            if (!response.ok) {
+                  return false;
+            }
+            return ture;
+      });
+}

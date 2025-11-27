@@ -18,52 +18,55 @@ refreshExpenseTracker();
 
 // Functions
 function addTransaction(e) {
-    e.preventDefault();
+      e.preventDefault();
 
-    dataService.insert({
-        description: descriptionEl.value.trim(),
-        amount: parseFloat(amountEl.value)
-    });
-    refreshExpenseTracker();
-    transactionFormEl.reset();
+      dataService.insert({
+            description: descriptionEl.value.trim(),
+            amount: parseFloat(amountEl.value)
+      });
+      refreshExpenseTracker();
+      transactionFormEl.reset();
 }
 
 function updateTransactionList() {
-    transactionListEl.innerHTML = "";
+      transactionListEl.innerHTML = "";
 
-    const transactions = dataService.readAll();
-
-    const sortedTransactions = [...transactions].reverse();
-    sortedTransactions.forEach(uiTransaction => {
-        const transactionEl = createTransactionElement(uiTransaction, refreshExpenseTracker);
-        transactionListEl.appendChild(transactionEl);
-    });
+      const transactionsPromise = dataService.readAll();
+      transactionsPromise.then(transactions => {
+            const sortedTransactions = [...transactions].reverse();
+            sortedTransactions.forEach(uiTransaction => {
+                  const transactionEl = createTransactionElement(uiTransaction, refreshExpenseTracker);
+                  transactionListEl.appendChild(transactionEl);
+            });
+      });
 }
 
 function updateSummary() {
 
-    const transactions = dataService.readAll();
+      const transactionsPromise = dataService.readAll();
 
-    const balance = transactions.reduce(
-        (acc, transaction) => acc + transaction.amount, 0
-    );
+      transactionsPromise.then(transactions => {
+            const balance = transactions.reduce(
+                  (acc, transaction) => acc + transaction.amount, 0
+            );
 
-    const income = transactions
-        .filter(transaction => transaction.amount > 0)
-        .reduce((acc, transaction) => acc + transaction.amount, 0);
+            const income = transactions
+                  .filter(transaction => transaction.amount > 0)
+                  .reduce((acc, transaction) => acc + transaction.amount, 0);
 
-    const expense = transactions
-        .filter(transaction => transaction.amount < 0)
-        .reduce((acc, transaction) => acc + transaction.amount, 0);
+            const expense = transactions
+                  .filter(transaction => transaction.amount < 0)
+                  .reduce((acc, transaction) => acc + transaction.amount, 0);
 
-    balanceEl.textContent = formatCurrency(balance);
-    incomeAmountEl.textContent = formatCurrency(income);
-    expenseAmountEl.textContent = formatCurrency((expense));
+            balanceEl.textContent = formatCurrency(balance);
+            incomeAmountEl.textContent = formatCurrency(income);
+            expenseAmountEl.textContent = formatCurrency((expense));
+      });
 }
 
 export function refreshExpenseTracker() {
-    updateSummary();
-    updateTransactionList();
+      updateSummary();
+      updateTransactionList();
 }
 
 

@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express, { json } from 'express';
 import cors from 'cors';
-import transactionRoutes from './routes/transactions.js';
+import transactionRoutes from './transactions.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;

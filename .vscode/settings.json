@@ -8,5 +8,5 @@
       "terminal.integrated.cursorBlinking": true,
       "terminal.integrated.drawBoldTextInBrightColors": true,
       "terminal.integrated.minimumContrastRatio": 1,
-      "livePreview.defaultPreviewPath": "./UI/src/index.html"
+      "livePreview.defaultPreviewPath": "/UI/src/index.html"
 }

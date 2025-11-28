@@ -1,13 +1,13 @@
 import { formatCurrency } from "../utils/helpers.js";
-import { dataService } from "../services/dataService.js";
 
 /**
  * Creates a transaction HTML element
  * @param {{ description, amount }} transaction The transaction data
  * @param {Function} onRemove Callback function to call when the transaction is removed
+ * @param {Function} editTransaction
  * @returns {HTMLElement} The transaction HTML element
  */
-export function createTransactionElement(transaction, onRemove) {
+export function createTransactionElement(transaction, onRemove, editTransaction) {
       const li = document.createElement("li");
       li.classList.add("transaction");
       li.classList.add(transaction.amount > 0 ? "income" : "expense");
@@ -21,11 +21,17 @@ export function createTransactionElement(transaction, onRemove) {
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("delete-btn");
       deleteBtn.textContent = "x";
-      deleteBtn.onclick = () => removeTransaction(transaction.id, onRemove);
+      deleteBtn.onclick = () => onRemove(transaction.id);
+
+      const editBtn = document.createElement("button");
+      editBtn.classList.add("edit-btn");
+      editBtn.textContent = "Edit";
+      editBtn.onclick = () => editTransaction(transaction.id);
 
       const amountContainer = document.createElement("span");
       amountContainer.appendChild(transactionAmountSpan);
       amountContainer.appendChild(deleteBtn);
+      amountContainer.appendChild(editBtn);
 
       li.appendChild(transactionDescSpan);
       li.appendChild(amountContainer);
@@ -33,9 +39,7 @@ export function createTransactionElement(transaction, onRemove) {
       return li;
 }
 
-function removeTransaction(id, onRemove) {
-      dataService.remove(id);
-      onRemove();
-}
+
+
 
 

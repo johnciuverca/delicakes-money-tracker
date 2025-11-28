@@ -1,6 +1,7 @@
 import { formatCurrency } from "./utils/helpers.js";
 import { createTransactionElement } from "./components/transaction.js";
-import { dataService } from "./services/dataService.js";
+import { dataService as dataProvider } from "./providers/dataProvider.js";
+import { updateTransaction } from "./providers/internals/dbProviderUtils.js";
 
 
 // Entry point
@@ -20,7 +21,7 @@ refreshExpenseTracker();
 function addTransaction(e) {
       e.preventDefault();
 
-      dataService.insert({
+      dataProvider.insert({
             description: descriptionEl.value.trim(),
             amount: parseFloat(amountEl.value)
       });
@@ -31,11 +32,11 @@ function addTransaction(e) {
 function updateTransactionList() {
       transactionListEl.innerHTML = "";
 
-      const transactionsPromise = dataService.readAll();
+      const transactionsPromise = dataProvider.readAll();
       transactionsPromise.then(transactions => {
             const sortedTransactions = [...transactions].reverse();
             sortedTransactions.forEach(uiTransaction => {
-                  const transactionEl = createTransactionElement(uiTransaction, refreshExpenseTracker);
+                  const transactionEl = createTransactionElement(uiTransaction, removeTransaction, editTransaction);
                   transactionListEl.appendChild(transactionEl);
             });
       });
@@ -43,7 +44,7 @@ function updateTransactionList() {
 
 function updateSummary() {
 
-      const transactionsPromise = dataService.readAll();
+      const transactionsPromise = dataProvider.readAll();
 
       transactionsPromise.then(transactions => {
             const balance = transactions.reduce(
@@ -64,7 +65,23 @@ function updateSummary() {
       });
 }
 
-export function refreshExpenseTracker() {
+function removeTransaction(id) {
+      dataProvider.remove(id);
+      refreshExpenseTracker();
+}
+
+function editTransaction(id) {
+      console.log("editTransaction1")
+      const dataIsComing = dataProvider.update(id);
+      dataIsComing.then((obj) => {
+            console.log(obj);
+            refreshExpenseTracker();
+      })
+}
+
+
+
+function refreshExpenseTracker() {
       updateSummary();
       updateTransactionList();
 }

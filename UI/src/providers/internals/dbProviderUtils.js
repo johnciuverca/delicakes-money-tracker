@@ -23,8 +23,25 @@ export function insertTransaction(transactionInput) {
       });
 }
 
+export function updateTransaction(inputId) {
+      console.log("updateTransaction3");
+      return fetch(`http://localhost:3000/api/transactions/${inputId}`, {
+            method: 'PUT',
+            headers: {
+                  'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+      }).then(response => {
+            console.log("updateTransaction.then4");
+            if (!response.ok) {
+                  throw new Error('Network response was not ok');
+            }
+            return response.json();
+      });
+}
+
 export function deleteTransaction(inputId) {
-      return fetch('http://localhost:3000/api/transactions', {
+      return fetch(`http://localhost:3000/api/transactions/${inputId}`, {
             method: 'DELETE',
             headers: {
                   'Content-Type': 'application/json'
@@ -36,6 +53,7 @@ export function deleteTransaction(inputId) {
             if (!response.ok) {
                   return false;
             }
-            return ture;
+            return true;
       });
 }
+

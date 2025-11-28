@@ -23,16 +23,14 @@ export function insertTransaction(transactionInput) {
       });
 }
 
-export function updateTransaction(inputId) {
-      console.log("updateTransaction3");
+export function updateTransaction(inputId, properties) {
       return fetch(`http://localhost:3000/api/transactions/${inputId}`, {
             method: 'PUT',
             headers: {
                   'Content-Type': 'application/json'
             },
-            body: JSON.stringify({})
+            body: JSON.stringify(properties)
       }).then(response => {
-            console.log("updateTransaction.then4");
             if (!response.ok) {
                   throw new Error('Network response was not ok');
             }

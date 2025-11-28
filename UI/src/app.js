@@ -71,8 +71,12 @@ function removeTransaction(id) {
 }
 
 function editTransaction(id) {
-      console.log("editTransaction1")
-      const dataIsComing = dataProvider.update(id);
+
+      const inputData = {
+            description: descriptionEl.value.trim(),
+            amount: parseFloat(amountEl.value)
+      }
+      const dataIsComing = dataProvider.update(id, inputData);
       dataIsComing.then((obj) => {
             console.log(obj);
             refreshExpenseTracker();

@@ -27,15 +27,17 @@ router.post('/', (req, res) => {
 //UPDATE a transaction by ID
 router.put('/:id', (req, res) => {
       const id = req.params.id;
+      const description = req.body.description;
+      const amount = req.body.amount;
       const target = transactions.find((transaction) => {
             return transaction.id == id;
       });
       if (target !== undefined) {
-            target.description = "x";
-            target.amout = 0;
-            res.status(200);
+            target.description = description;
+            target.amount = amount;
+            res.status(200).json({});
       } else {
-            res.status(404);
+            res.status(404).json({});
       }
       console.log("put " + JSON.stringify(transactions));
 });

@@ -28,8 +28,8 @@ export const dataService = {
        * @param {string} id The id of the object to be updated
        * @returns    -!!!!!!!!!!!!TODO!!!!!!!!!!-
        */
-      update(id) {
-            return dataPoviderImpl.update(id);
+      update(id, inputData) {
+            return dataPoviderImpl.update(id, inputData);
       },
 
       /**
@@ -67,9 +67,8 @@ function dbProviderAdaptor() {
             remove(id) {
                   return deleteTransaction(id);
             },
-            update(id) {
-                  console.log("dbProvide.update2");
-                  return updateTransaction(id);
+            update(id, properties) {
+                  return updateTransaction(id, properties);
             }
       };
 };

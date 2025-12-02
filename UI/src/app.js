@@ -71,21 +71,24 @@ function removeTransaction(id) {
 }
 
 function editTransaction(id) {
-      const inputDescription = prompt("Enter new description:");
-      if (inputDescription === null) return;
-      if (inputDescription === "") {
-            alert("Please provide a valid description. Value cannot be empty")
-            return;
-      }
 
-      const inputAmount = prompt("Enter new amout")
-      if (inputAmount === null) return;
+      let inputDescription = prompt("Enter new DESCRIPTION:");
+      do {
+            if (inputDescription === "") {
+                  inputDescription = prompt("Descrption cannot be empty. Enter new DESCRIPITION: ")
+            }
+            if (inputDescription === null) return;
+      } while (inputDescription === "");
 
-      const inputAmountValue = parseFloat(inputAmount);
-      if (isNaN(inputAmountValue)) {
-            alert("Please provide a valid amount. Value cannot be empty")
-            return;
-      }
+      let inputAmountValue;
+      let inputAmount = prompt("Eneter new AMOUNT:");
+      do {
+            if (inputAmount === null) return;
+            if (isNaN(inputAmountValue)) {
+                  inputAmount = prompt("Ammount cannot be empty. Enter new AMOUNT:");
+            }
+            inputAmountValue = parseFloat(inputAmount);
+      } while (isNaN(inputAmountValue));
 
       const dataIsComing = dataProvider.update(id, {
             description: inputDescription,
@@ -102,4 +105,5 @@ function refreshExpenseTracker() {
       updateSummary();
       updateTransactionList();
 }
+
 

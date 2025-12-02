@@ -20,12 +20,12 @@ export function createTransactionElement(transaction, onRemove, editTransaction)
 
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("delete-btn");
-      deleteBtn.textContent = "x";
+      deleteBtn.textContent = "❌";
       deleteBtn.onclick = () => onRemove(transaction.id);
 
       const editBtn = document.createElement("button");
       editBtn.classList.add("edit-btn");
-      editBtn.textContent = "Edit";
+      editBtn.textContent = "📝";
       editBtn.onclick = () => editTransaction(transaction.id);
 
       const amountContainer = document.createElement("span");

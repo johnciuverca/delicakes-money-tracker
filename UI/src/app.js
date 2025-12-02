@@ -76,6 +76,12 @@ function editTransaction(id) {
             description: descriptionEl.value.trim(),
             amount: parseFloat(amountEl.value)
       }
+
+      if (isNaN(inputData.amount) || inputData.description === "") {
+            alert("Please provide valid description and amount. Values cannot be empty.");
+            return;
+      }
+
       const dataIsComing = dataProvider.update(id, inputData);
       dataIsComing.then((obj) => {
             console.log(obj);

@@ -1,5 +1,5 @@
 export function fetchAllTransactions() {
-      return fetch('http://localhost:3000/api/transactions')
+      return fetch('http://localhost:3100/api/transactions')
             .then(response => {
                   if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -9,7 +9,7 @@ export function fetchAllTransactions() {
 }
 
 export function insertTransaction(transactionInput) {
-      return fetch('http://localhost:3000/api/transactions', {
+      return fetch('http://localhost:3100/api/transactions', {
             method: 'POST',
             headers: {
                   'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ export function insertTransaction(transactionInput) {
 }
 
 export function updateTransaction(inputId, properties) {
-      return fetch(`http://localhost:3000/api/transactions/${inputId}`, {
+      return fetch(`http://localhost:3100/api/transactions/${inputId}`, {
             method: 'PUT',
             headers: {
                   'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ export function updateTransaction(inputId, properties) {
 }
 
 export function deleteTransaction(inputId) {
-      return fetch(`http://localhost:3000/api/transactions/${inputId}`, {
+      return fetch(`http://localhost:3100/api/transactions/${inputId}`, {
             method: 'DELETE',
             headers: {
                   'Content-Type': 'application/json'

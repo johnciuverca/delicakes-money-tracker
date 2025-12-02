@@ -47,7 +47,7 @@ router.delete('/', (req, res) => {
       const id = req.body.id;
       const elementIndex = transactions.findIndex(x => x.id === id);
       transactions.splice(elementIndex, 1);
-      res.status(200);
+      res.status(200).json({});
       console.log(getCurrentTime() + " delete: " + JSON.stringify(transactions));
 });
 

@@ -22,8 +22,9 @@ function addTransaction(e) {
       dataProvider.insert({
             description: descriptionEl.value.trim(),
             amount: parseFloat(amountEl.value)
+      }).then(() => {
+            refreshExpenseTracker();
       });
-      refreshExpenseTracker();
       transactionFormEl.reset();
 }
 
@@ -74,7 +75,7 @@ function editTransaction(id) {
       } while (inputDescription === "");
 
       let inputAmountValue;
-      let inputAmount = prompt("Eneter new AMOUNT:");
+      let inputAmount = prompt("Enter new AMOUNT:");
       do {
             if (inputAmount === null) return;
             inputAmountValue = parseFloat(inputAmount);
@@ -96,8 +97,11 @@ function editTransaction(id) {
 }
 
 function removeTransaction(id) {
-      dataProvider.remove(id);
-      refreshExpenseTracker();
+      dataProvider
+            .remove(id)
+            .then(() => {
+                  refreshExpenseTracker();
+            });
 }
 
 function refreshExpenseTracker() {

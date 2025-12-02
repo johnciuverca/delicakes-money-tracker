@@ -71,29 +71,35 @@ function removeTransaction(id) {
 }
 
 function editTransaction(id) {
-
-      const inputData = {
-            description: descriptionEl.value.trim(),
-            amount: parseFloat(amountEl.value)
-      }
-
-      if (isNaN(inputData.amount) || inputData.description === "") {
-            alert("Please provide valid description and amount. Values cannot be empty.");
+      const inputDescription = prompt("Enter new description:");
+      if (inputDescription === null) return;
+      if (inputDescription === "") {
+            alert("Please provide a valid description. Value cannot be empty")
             return;
       }
 
-      const dataIsComing = dataProvider.update(id, inputData);
+      const inputAmount = prompt("Enter new amout")
+      if (inputAmount === null) return;
+
+      const inputAmountValue = parseFloat(inputAmount);
+      if (isNaN(inputAmountValue)) {
+            alert("Please provide a valid amount. Value cannot be empty")
+            return;
+      }
+
+      const dataIsComing = dataProvider.update(id, {
+            description: inputDescription,
+            amount: inputAmountValue,
+      });
+
       dataIsComing.then((obj) => {
             console.log(obj);
             refreshExpenseTracker();
       })
 }
 
-
-
 function refreshExpenseTracker() {
       updateSummary();
       updateTransactionList();
 }
-
 

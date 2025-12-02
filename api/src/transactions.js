@@ -1,4 +1,4 @@
-import { response, Router } from 'express';
+import { Router } from 'express';
 
 const router = Router();
 
@@ -6,10 +6,10 @@ const router = Router();
 let transactions = [];
 let nextId = 1;
 
-// GET all transactions
+// GET all transactionsx
 router.get('/', (req, res) => {
       res.json(transactions);
-      console.log("get " + JSON.stringify(transactions));
+      console.log(getCurrentTime() + " get " + JSON.stringify(transactions));
 });
 
 // POST a new transaction
@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
       };
       transactions.push(newTransaction);
       res.status(201).json(newTransaction);
-      console.log("post " + JSON.stringify(transactions));
+      console.log(getCurrentTime() + " post " + JSON.stringify(transactions));
 });
 
 //UPDATE a transaction by ID
@@ -39,7 +39,7 @@ router.put('/:id', (req, res) => {
       } else {
             res.status(404).json({});
       }
-      console.log("put " + JSON.stringify(transactions));
+      console.log(getCurrentTime() + " put " + JSON.stringify(transactions));
 });
 
 // DELETE a transaction by ID
@@ -48,9 +48,25 @@ router.delete('/', (req, res) => {
       const elementIndex = transactions.findIndex(x => x.id === id);
       transactions.splice(elementIndex, 1);
       res.status(200);
-      console.log("delete: " + JSON.stringify(transactions));
+      console.log(getCurrentTime() + " delete: " + JSON.stringify(transactions));
 });
 
-
+function getCurrentTime() {
+      var now = new Date();
+      var pretty = [
+            now.getFullYear(),
+            '-',
+            now.getMonth() + 1,
+            '-',
+            now.getDate(),
+            ' ',
+            now.getHours(),
+            ':',
+            now.getMinutes(),
+            ':',
+            now.getSeconds()
+      ].join('');
+      return pretty;
+}
 
 export default router;

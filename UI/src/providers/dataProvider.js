@@ -5,7 +5,7 @@ import { removeTransaction as removeFromLocalStorage } from "./internals/localSt
 
 const dataPoviderImpl = dbProviderAdaptor();
 
-export const dataService = {
+export const dataProvider = {
       /**
        * Read all transactions from database
        * @returns {Promise<Array>}  Array of all transactions

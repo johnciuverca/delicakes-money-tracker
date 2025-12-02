@@ -1,8 +1,6 @@
 import { formatCurrency } from "./utils/helpers.js";
 import { createTransactionElement } from "./components/transaction.js";
-import { dataService as dataProvider } from "./providers/dataProvider.js";
-import { updateTransaction } from "./providers/internals/dbProviderUtils.js";
-
+import { dataProvider } from "./providers/dataProvider.js";
 
 // Entry point
 const balanceEl = document.getElementById("balance");
@@ -65,17 +63,12 @@ function updateSummary() {
       });
 }
 
-function removeTransaction(id) {
-      dataProvider.remove(id);
-      refreshExpenseTracker();
-}
-
 function editTransaction(id) {
 
       let inputDescription = prompt("Enter new DESCRIPTION:");
       do {
             if (inputDescription === "") {
-                  inputDescription = prompt("Descrption cannot be empty. Enter new DESCRIPITION: ")
+                  inputDescription = prompt("Descrption cannot be empty. Enter new DESCRIPITION: ");
             }
             if (inputDescription === null) return;
       } while (inputDescription === "");
@@ -84,10 +77,11 @@ function editTransaction(id) {
       let inputAmount = prompt("Eneter new AMOUNT:");
       do {
             if (inputAmount === null) return;
+            inputAmountValue = parseFloat(inputAmount);
             if (isNaN(inputAmountValue)) {
                   inputAmount = prompt("Ammount cannot be empty. Enter new AMOUNT:");
             }
-            inputAmountValue = parseFloat(inputAmount);
+
       } while (isNaN(inputAmountValue));
 
       const dataIsComing = dataProvider.update(id, {
@@ -99,6 +93,11 @@ function editTransaction(id) {
             console.log(obj);
             refreshExpenseTracker();
       })
+}
+
+function removeTransaction(id) {
+      dataProvider.remove(id);
+      refreshExpenseTracker();
 }
 
 function refreshExpenseTracker() {

@@ -39,7 +39,7 @@ export function updateTransaction(inputId, properties) {
 }
 
 export function deleteTransaction(inputId) {
-      return fetch(`http://localhost:3100/api/transactions/${inputId}`, {
+      return fetch(`http://localhost:3100/api/transactions`, {
             method: 'DELETE',
             headers: {
                   'Content-Type': 'application/json'

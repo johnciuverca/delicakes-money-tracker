@@ -80,7 +80,9 @@ function editTransaction(id) {
             if (inputAmount === null) return;
             inputAmountValue = parseFloat(inputAmount);
             if (isNaN(inputAmountValue)) {
-                  inputAmount = prompt("Ammount cannot be empty. Enter new AMOUNT:");
+                  inputAmount = prompt("Amount must be a number. Enter new AMOUNT:");
+            } else if (inputAmount === "") {
+                  inputAmount = prompt("Amount cannot be empty. Enter new AMOUNT:");
             }
 
       } while (isNaN(inputAmountValue));

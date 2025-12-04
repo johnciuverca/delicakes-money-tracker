@@ -10,6 +10,7 @@ const transactionListEl = document.getElementById("transaction-list");
 const transactionFormEl = document.getElementById("transaction-form");
 const descriptionEl = document.getElementById("description");
 const amountEl = document.getElementById("amount");
+const recordDateEl = document.getElementById("record-date");
 
 transactionFormEl.addEventListener("submit", addTransaction)
 
@@ -21,7 +22,8 @@ function addTransaction(e) {
 
       dataProvider.insert({
             description: descriptionEl.value.trim(),
-            amount: parseFloat(amountEl.value)
+            amount: parseFloat(amountEl.value),
+            recordDate: recordDateEl.value
       }).then(() => {
             refreshExpenseTracker();
       });
@@ -64,9 +66,9 @@ function updateSummary() {
       });
 }
 
-function editTransaction(id) {
+function editTransaction(id, description, amount, recordDate) {
 
-      let inputDescription = prompt("Enter new DESCRIPTION:");
+      let inputDescription = prompt("Enter new DESCRIPTION:", description);
       do {
             if (inputDescription === "") {
                   inputDescription = prompt("Descrption cannot be empty. Enter new DESCRIPITION: ");
@@ -74,8 +76,16 @@ function editTransaction(id) {
             if (inputDescription === null) return;
       } while (inputDescription === "");
 
+      let inputRecordDate = prompt("Enter new RECORD DATE (DD-MM-YYYY):", recordDate);
+      do {
+            if (inputRecordDate === "") {
+                  inputRecordDate = prompt("Record date cannot be empty. Enter new RECORD DATE (DD-MM-YYYY): ");
+            }
+            if (inputRecordDate === null) return;
+      } while (inputRecordDate === "");
+
       let inputAmountValue;
-      let inputAmount = prompt("Enter new AMOUNT:");
+      let inputAmount = prompt("Enter new AMOUNT:", amount);
       do {
             if (inputAmount === null) return;
             inputAmountValue = parseFloat(inputAmount);
@@ -89,6 +99,7 @@ function editTransaction(id) {
 
       const dataIsComing = dataProvider.update(id, {
             description: inputDescription,
+            recordDate: inputRecordDate,
             amount: inputAmountValue,
       });
 

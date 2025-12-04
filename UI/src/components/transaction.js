@@ -15,8 +15,13 @@ export function createTransactionElement(transaction, onRemove, editTransaction)
       const transactionDescSpan = document.createElement("span");
       transactionDescSpan.textContent = transaction.description;
 
+      const transactionRecordDateSpan = document.createElement("span");
+      transactionRecordDateSpan.textContent = transaction.recordDate;
+
       const transactionAmountSpan = document.createElement("span");
       transactionAmountSpan.textContent = formatCurrency(transaction.amount);
+
+      const buttonsContainer = document.createElement("span");
 
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("delete-btn");
@@ -26,15 +31,15 @@ export function createTransactionElement(transaction, onRemove, editTransaction)
       const editBtn = document.createElement("button");
       editBtn.classList.add("edit-btn");
       editBtn.textContent = "📝";
-      editBtn.onclick = () => editTransaction(transaction.id);
+      editBtn.onclick = () => editTransaction(transaction.id, transaction.description, transaction.amount, transaction.recordDate);
 
-      const amountContainer = document.createElement("span");
-      amountContainer.appendChild(transactionAmountSpan);
-      amountContainer.appendChild(deleteBtn);
-      amountContainer.appendChild(editBtn);
+      buttonsContainer.appendChild(editBtn);
+      buttonsContainer.appendChild(deleteBtn);
 
       li.appendChild(transactionDescSpan);
-      li.appendChild(amountContainer);
+      li.appendChild(transactionRecordDateSpan);
+      li.appendChild(transactionAmountSpan);
+      li.appendChild(buttonsContainer);
 
       return li;
 }

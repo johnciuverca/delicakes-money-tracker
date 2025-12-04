@@ -21,7 +21,7 @@ export function getAllTransactions() {
 }
 
 // Add a new transaction
-export function addTransaction(description, amount) {
+export function addTransaction(description, amount, recordDate) {
       const dataPromise = fs.readFile(STORAGE_FILE, 'utf8');
 
       let concludeSuccess;
@@ -36,7 +36,8 @@ export function addTransaction(description, amount) {
             const newTransaction = {
                   id: result.nextId++,
                   description,
-                  amount
+                  amount,
+                  recordDate
             }
             result.transactions.push(newTransaction);
             const newState = JSON.stringify(result);
@@ -50,7 +51,7 @@ export function addTransaction(description, amount) {
 }
 
 // Edit a transaction
-export function updateTransaction(id, description, amount) {
+export function updateTransaction(id, description, amount, recordDate) {
       const dataPromise = fs.readFile(STORAGE_FILE, 'utf-8');
       const updatedPromise = dataPromise.then((data) => {
             const dbState = JSON.parse(data);
@@ -58,6 +59,7 @@ export function updateTransaction(id, description, amount) {
             if (target) {
                   target.description = description;
                   target.amount = amount;
+                  target.recordDate = recordDate;
             };
             const result = JSON.stringify(dbState);
             fs.writeFile(STORAGE_FILE, result);

@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 
 // POST a new transaction
 router.post('/', (req, res) => {
-      addTransaction(req.body.description, req.body.amount).then((data) => {
+      addTransaction(req.body.description, req.body.amount, req.body.recordDate).then((data) => {
             res.json(data);
             console.log(getCurrentTime() + " post" + JSON.stringify(data))
       }).catch((reason) => {
@@ -36,7 +36,8 @@ router.put('/:id', (req, res) => {
       const id = req.params.id;
       const description = req.body.description;
       const amount = req.body.amount;
-      updateTransaction(id, description, amount).then(() => {
+      const recordDate = req.body.recordDate;
+      updateTransaction(id, description, amount, recordDate).then(() => {
             res.json({});
             console.log(getCurrentTime() + " put - updated transaction " + id)
       }).catch((error) => {
